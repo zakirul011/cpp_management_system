@@ -58,9 +58,7 @@ void store()
 // TAKE INPUT FROM USER
 void input()
 {
-    cout << "===================================" << endl
-         << "Enter Details of the Player" << endl
-         << "===================================" << endl;
+    notify("Enter Details of the Player");
 
     cout << "\nPlayer Name: ";
     cin >> name;
