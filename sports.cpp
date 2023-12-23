@@ -4,9 +4,10 @@
 #include <cstring>
 using namespace std;
 
+// INITIALIZE VALIABLES
 int option,
-    age,
-    found = 0;
+    found = 0,
+    age;
 
 char name[50],
     id[50],
@@ -17,6 +18,9 @@ char name[50],
     space = '\t',
     searchText[50];
 
+// FUNCTIONS
+
+// TITLE FOR DISPLAY
 void notify(string text)
 {
     cout << "===================================" << endl
@@ -24,11 +28,13 @@ void notify(string text)
          << "===================================" << endl;
 }
 
+// CLEAR THE SCREEN
 void clear()
 {
     system("CLS");
 }
 
+// STORE DATA IN FILE
 void store()
 {
     ofstream file;
@@ -49,6 +55,7 @@ void store()
     file.close();
 }
 
+// TAKE INPUT FROM USER
 void input()
 {
     cout << "===================================" << endl
@@ -77,6 +84,7 @@ void input()
     cin >> coachName;
 }
 
+// DISPLAY SINGLE PLAYER
 void showSingle()
 {
     cout << left << setw(18) << "Player Name:"
@@ -96,6 +104,7 @@ void showSingle()
          << left << setw(18) << endl;
 }
 
+// DISPLAY ALL PLAYER OF DATABASE
 void showAll()
 {
     ifstream readFile;
@@ -129,6 +138,7 @@ void showAll()
     readFile.close();
 }
 
+// ACTIONS DEPEND ON USER CHOISE
 void actions(int action)
 {
     notify("Enter Player Name or ID");
@@ -261,6 +271,7 @@ void actions(int action)
     rename("temp.txt", "player.txt");
 }
 
+// RESET OR CLEAR THE DATABASE
 void removeAll()
 {
     cout << "Are you sure to remove all players?" << endl
@@ -278,13 +289,16 @@ void removeAll()
     }
 }
 
+// MAIN FUNCTION
 int main()
 {
+    // WELCOME TEXT
     clear();
     notify("Welcome to Ground");
 
     while (1)
     {
+        // MAINMENU
         notify("SPORTS MANAGEMENT MENU");
         cout << "1. Display All Players" << endl
              << "2. Add New Player" << endl
@@ -298,6 +312,7 @@ int main()
         cin >> option;
         clear();
 
+        // SHOW ACTION ON USER CHOISE
         switch (option)
         {
         case 1:
