@@ -1,7 +1,7 @@
 #include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <cstring>
+#include <fstream> // File handling
+#include <iomanip> // left, setw()
+#include <cstring> // strcmp()
 using namespace std;
 
 // INITIALIZE VALIABLES
