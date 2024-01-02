@@ -76,7 +76,7 @@ void store()
 
     clear();
     cout << "===================================" << endl
-         << "Player " << name << " is successfully added." << endl
+         << "Player \"" << name << "\" is successfully added." << endl
          << "===================================" << endl;
 
     file.close();
@@ -254,7 +254,9 @@ void remove()
                 if (option == 1)
                 {
                     clear();
-                    title("Player is successfully removed");
+                    cout << "===================================" << endl
+                         << "Player \"" << name << "\" is successfully removed." << endl
+                         << "===================================" << endl;
                 }
                 else
                 {
@@ -374,7 +376,9 @@ void modify()
                       << coach << endl;
 
                 clear();
-                title("Player is successfully Modified");
+                cout << "===================================" << endl
+                     << "Player \"" << name << "\" is successfully Modified." << endl
+                     << "===================================" << endl;
             }
             else
             {

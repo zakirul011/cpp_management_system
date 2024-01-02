@@ -1,6 +1,8 @@
 # SPORTS MANAGEMENT SYSTEM
 
-# Features (8) :
+    Sports Player handle
+
+# Main Features (8) :
 
     1. Display All Players
     2. Add New Player
