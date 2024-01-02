@@ -21,7 +21,7 @@ char name[100],
 // FUNCTIONS
 
 // TITLE FOR DISPLAY
-void notify(string text)
+void title(string text)
 {
     cout << "===================================" << endl
          << text << endl
@@ -58,7 +58,7 @@ void store()
 // TAKE INPUT FROM USER
 void input()
 {
-    notify("Enter Details of the Player");
+    title("Enter Details of the Player");
 
     cout << "\nName: ";
     cin >> name;
@@ -78,7 +78,7 @@ void input()
     cout << "\nGame: ";
     cin >> game;
 
-    cout << "\nCoach  ";
+    cout << "\nCoach: ";
     cin >> coach;
 }
 
@@ -108,11 +108,11 @@ void showAll()
     readFile.open("player.txt");
     found = 0;
 
-    notify("Player List");
+    title("Player List");
 
     if (!readFile)
     {
-        notify("There is no Records");
+        title("There are no Records");
     }
     else
     {
@@ -128,7 +128,7 @@ void showAll()
         }
         if (found == 0)
         {
-            notify("There is no Records");
+            title("There is no Records");
         }
     }
 
@@ -152,7 +152,7 @@ void modify(ofstream &file)
              << coach << endl;
 
         clear();
-        notify("Player is successfully Modified");
+        title("Player is successfully Modified");
     }
     else
     {
@@ -181,7 +181,7 @@ void remove(ofstream &file)
         if (option == 1)
         {
             clear();
-            notify("Player is successfully removed");
+            title("Player is successfully removed");
         }
         else
         {
@@ -206,6 +206,7 @@ void remove(ofstream &file)
     }
 }
 
+// SEARCH BY PLAYER INFO
 void searchBy(ifstream &file, char *info)
 {
     cout << ">> ";
@@ -230,7 +231,7 @@ void searchBy(ifstream &file, char *info)
 // SEARCH PLAYER
 void search()
 {
-    notify("Search By ");
+    title("Search By ");
     cout << "1. Name" << endl
          << "2. ID" << endl
          << "3. Mobile No" << endl
@@ -246,7 +247,7 @@ void search()
 
     if (!file)
     {
-        notify("There is no Records");
+        title("There is no Records");
     }
     else
     {
@@ -254,38 +255,38 @@ void search()
         switch (option)
         {
         case 1:
-            notify("Enter Player Name");
+            title("Enter Player Name");
             searchBy(file, name);
             break;
         case 2:
-            notify("Enter Player ID");
+            title("Enter Player ID");
             searchBy(file, id);
             break;
         case 3:
-            notify("Enter Player Mobile No");
+            title("Enter Player Mobile No");
             searchBy(file, mobile);
             break;
         case 4:
-            notify("Enter Player Address (City)");
+            title("Enter Player Address (City)");
             searchBy(file, address);
             break;
         case 5:
-            notify("Enter Name of the Game");
+            title("Enter Name of the Game");
             searchBy(file, game);
             break;
         case 6:
-            notify("Enter Coach Name");
+            title("Enter Coach Name");
             searchBy(file, coach);
             break;
 
         default:
-            notify("Invalid Search Choice");
+            title("Invalid Search Choice");
             break;
         }
 
         if (found == 0)
         {
-            notify("Player Not found");
+            title("Player Not found");
         }
     }
 
@@ -295,7 +296,7 @@ void search()
 // ACTIONS DEPEND ON USER CHOICE
 void actions(int action)
 {
-    notify("Enter Player Name or ID");
+    title("Enter Player Name or ID");
     cout << ">> ";
     cin >> searchText;
 
@@ -305,7 +306,7 @@ void actions(int action)
 
     if (!file1)
     {
-        notify("There is no Records");
+        title("There is no Records");
     }
     else
     {
@@ -330,7 +331,7 @@ void actions(int action)
         }
         if (found == 0)
         {
-            notify("Player Not found");
+            title("Player Not found");
         }
     }
 
@@ -354,7 +355,7 @@ void removeAll()
         ofstream writeFile("player.txt");
         writeFile.close();
         clear();
-        notify("Player record has been reset");
+        title("Player record has been reset");
     }
 }
 
@@ -363,20 +364,20 @@ int main()
 {
     // WELCOME TEXT
     clear();
-    notify("Welcome to Ground");
+    title("Welcome to Ground");
 
     while (1)
     {
         // MAINMENU
         cout << endl;
-        notify("SPORTS MANAGEMENT MENU");
+        title("SPORTS MANAGEMENT MENU");
         cout << "1. Display All Players" << endl
              << "2. Add New Player" << endl
              << "3. Modify Player" << endl
              << "4. Remove Player" << endl
              << "5. Search Player" << endl
              << "6. Remove All Players" << endl
-             << "7. Clear screen" << endl
+             << "7. Clear Screen" << endl
              << "0. Exit" << endl
              << "Choose option >> ";
         cin >> option;
@@ -411,7 +412,7 @@ int main()
             exit(0);
             break;
         default:
-            notify("Invalid choice. Please select from the menu");
+            title("Invalid choice... \nPlease select from the menu...");
             break;
         }
     }

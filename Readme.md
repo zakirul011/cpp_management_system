@@ -7,6 +7,12 @@
     3. Modify Player
     4. Remove Player
     5. Search Player
+        i. Search by Name
+        ii. Search by ID
+        iii. Search by Mobile
+        iv. Search by Address
+        v. Search by Game
+        v. Search by Coach
     6. Remove All Players
     7. Clear Screen
     0. Exit
