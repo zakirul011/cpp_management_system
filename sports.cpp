@@ -34,27 +34,6 @@ void clear()
     system("CLS");
 }
 
-// STORE DATA IN FILE
-void store()
-{
-    ofstream file;
-    file.open("player.txt", ios::out | ios::app);
-    file << name << space
-         << id << space
-         << age << space
-         << address << space
-         << mobile << space
-         << game << space
-         << coach << endl;
-
-    clear();
-    cout << "===================================" << endl
-         << "Player " << name << " is successfully added." << endl
-         << "===================================" << endl;
-
-    file.close();
-}
-
 // TAKE INPUT FROM USER
 void input()
 {
@@ -82,6 +61,27 @@ void input()
     cin >> coach;
 }
 
+// STORE DATA IN FILE
+void store()
+{
+    ofstream file;
+    file.open("player.txt", ios::out | ios::app);
+    file << name << space
+         << id << space
+         << age << space
+         << mobile << space
+         << address << space
+         << game << space
+         << coach << endl;
+
+    clear();
+    cout << "===================================" << endl
+         << "Player " << name << " is successfully added." << endl
+         << "===================================" << endl;
+
+    file.close();
+}
+
 // DISPLAY SINGLE PLAYER
 void showSingle()
 {
@@ -91,119 +91,48 @@ void showSingle()
          << " :\t" << id << endl
          << left << setw(18) << "Player Age"
          << " :\t" << age << endl
-         << left << setw(18) << "Address (City)"
-         << " :\t" << address << endl
          << left << setw(18) << "Mobile No"
          << " :\t" << mobile << endl
-         << left << setw(18) << "Game Name"
+         << left << setw(18) << "Address (City)"
+         << " :\t" << address << endl
+         << left << setw(18) << "Game"
          << " :\t" << game << endl
-         << left << setw(18) << "Coach Name"
+         << left << setw(18) << "Coach"
          << " :\t" << coach << endl;
 }
 
 // DISPLAY ALL PLAYER OF DATABASE
 void showAll()
 {
-    ifstream readFile;
-    readFile.open("player.txt");
+    ifstream file;
+    file.open("player.txt");
     found = 0;
 
     title("Player List");
 
-    if (!readFile)
+    if (!file)
     {
         title("There are no Records");
     }
     else
     {
-        readFile >> name >> id >> age >> address >> mobile >> game >> coach;
-        while (!readFile.eof())
+        file >> name >> id >> age >> mobile >> address >> game >> coach;
+        while (!file.eof())
         {
             found++;
             cout << "===================================" << endl
                  << "Player no. " << found << endl
                  << "===================================" << endl;
             showSingle();
-            readFile >> name >> id >> age >> address >> mobile >> game >> coach;
+            file >> name >> id >> age >> mobile >> address >> game >> coach;
         }
         if (found == 0)
         {
-            title("There is no Records");
+            title("There are no Records");
         }
     }
 
-    readFile.close();
-}
-
-// MODIFY PLAYER
-void modify(ofstream &file)
-{
-    if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
-    {
-        found++;
-        clear();
-        input();
-        file << name << space
-             << id << space
-             << age << space
-             << address << space
-             << mobile << space
-             << game << space
-             << coach << endl;
-
-        clear();
-        title("Player is successfully Modified");
-    }
-    else
-    {
-        file << name << space
-             << id << space
-             << age << space
-             << address << space
-             << mobile << space
-             << game << space
-             << coach << endl;
-    }
-}
-
-// REMOVE PLAYER
-void remove(ofstream &file)
-{
-    if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
-    {
-        found++;
-        clear();
-        cout << "Are you sure to remove the player " << searchText << "?" << endl
-             << "1. Yes" << endl
-             << "2. No" << endl
-             << ">> ";
-        cin >> option;
-        if (option == 1)
-        {
-            clear();
-            title("Player is successfully removed");
-        }
-        else
-        {
-            file << name << space
-                 << id << space
-                 << age << space
-                 << address << space
-                 << mobile << space
-                 << game << space
-                 << coach << endl;
-        }
-    }
-    else
-    {
-        file << name << space
-             << id << space
-             << age << space
-             << address << space
-             << mobile << space
-             << game << space
-             << coach << endl;
-    }
+    file.close();
 }
 
 // SEARCH BY PLAYER INFO
@@ -224,7 +153,7 @@ void searchBy(ifstream &file, char *info)
                  << "===================================" << endl;
             showSingle();
         }
-        file >> name >> id >> age >> address >> mobile >> game >> coach;
+        file >> name >> id >> age >> mobile >> address >> game >> coach;
     }
 }
 
@@ -235,7 +164,7 @@ void search()
     cout << "1. Name" << endl
          << "2. ID" << endl
          << "3. Mobile No" << endl
-         << "4. Addess (City)" << endl
+         << "4. Address (City)" << endl
          << "5. Game" << endl
          << "6. Coach" << endl
          << "Choose option >> ";
@@ -251,7 +180,7 @@ void search()
     }
     else
     {
-        file >> name >> id >> age >> address >> mobile >> game >> coach;
+        file >> name >> id >> age >> mobile >> address >> game >> coach;
         switch (option)
         {
         case 1:
@@ -280,7 +209,7 @@ void search()
             break;
 
         default:
-            title("Invalid Search Choice");
+            title("Invalid Choice for Search");
             break;
         }
 
@@ -293,8 +222,8 @@ void search()
     file.close();
 }
 
-// ACTIONS DEPEND ON USER CHOICE
-void actions(int action)
+// REMOVE PLAYER
+void remove()
 {
     title("Enter Player Name or ID");
     cout << ">> ";
@@ -310,24 +239,155 @@ void actions(int action)
     }
     else
     {
-        file1 >> name >> id >> age >> address >> mobile >> game >> coach;
+        file1 >> name >> id >> age >> mobile >> address >> game >> coach;
         while (!file1.eof())
         {
-            switch (action)
+            if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
             {
-            case 1:
-                // Modify by searched text
-                modify(file2);
-                break;
-            case 2:
-                // remove by searched text
-                remove(file2);
-                break;
-            default:
-                break;
+                found++;
+                clear();
+                cout << "Are you sure to remove the player \"" << searchText << "\"?" << endl
+                     << "1. Yes" << endl
+                     << "2. No" << endl
+                     << "Choose option >> ";
+                cin >> option;
+                if (option == 1)
+                {
+                    clear();
+                    title("Player is successfully removed");
+                }
+                else
+                {
+                    file2 << name << space
+                          << id << space
+                          << age << space
+                          << mobile << space
+                          << address << space
+                          << game << space
+                          << coach << endl;
+                }
+            }
+            else
+            {
+                file2 << name << space
+                      << id << space
+                      << age << space
+                      << mobile << space
+                      << address << space
+                      << game << space
+                      << coach << endl;
             }
 
-            file1 >> name >> id >> age >> address >> mobile >> game >> coach;
+            file1 >> name >> id >> age >> mobile >> address >> game >> coach;
+        }
+        if (found == 0)
+        {
+            title("Player Not found");
+        }
+    }
+
+    file1.close();
+    file2.close();
+    remove("player.txt");
+    rename("temp.txt", "player.txt");
+}
+
+// MODIFY PLAYER
+void modify()
+{
+    title("Enter Player Name or ID");
+    cout << ">> ";
+    cin >> searchText;
+
+    ifstream file1("player.txt");
+    ofstream file2("temp.txt");
+    found = 0;
+
+    if (!file1)
+    {
+        title("There is no Records");
+    }
+    else
+    {
+        file1 >> name >> id >> age >> mobile >> address >> game >> coach;
+        while (!file1.eof())
+        {
+            if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
+            {
+                found++;
+                clear();
+
+                cout << "===================================" << endl
+                     << "What do you want to Modify for \"" << searchText << "\"?" << endl
+                     << "===================================" << endl;
+                cout << "1. Name" << endl
+                     << "2. ID" << endl
+                     << "3. Age" << endl
+                     << "4. Mobile No" << endl
+                     << "5. Addess (City)" << endl
+                     << "6. Game" << endl
+                     << "7. Coach" << endl
+                     << "Choose option >> ";
+                cin >> option;
+
+                switch (option)
+                {
+                case 1:
+                    cout << "\nEnter modified Name: ";
+                    cin >> name;
+                    break;
+                case 2:
+                    cout << "\nEnter modified ID: ";
+                    cin >> id;
+                    break;
+                case 3:
+                    cout << "\nEnter modified Age: ";
+                    cin >> age;
+                    break;
+                case 4:
+                    cout << "\nEnter modified Mobile no: ";
+                    cin >> mobile;
+                    break;
+                case 5:
+                    cout << "\nEnter modified Address (city): ";
+                    cin >> address;
+                    break;
+                case 6:
+                    cout << "\nEnter modified Game: ";
+                    cin >> game;
+                    break;
+                case 7:
+                    cout << "\nEnter modified Coach: ";
+                    cin >> coach;
+                    break;
+                default:
+                    title("Invalid Choice for Modify");
+                    break;
+                }
+
+                file2 << name << space
+                      << id << space
+                      << age << space
+                      << mobile << space
+                      << address << space
+                      << game << space
+                      << coach << endl;
+
+                clear();
+                title("Player is successfully Modified");
+            }
+            else
+            {
+                file2 << name << space
+                      << id << space
+                      << age << space
+                      << mobile << space
+                      << address << space
+                      << game << space
+                      << coach << endl;
+            }
+
+            file1 >> name >> id >> age >> mobile >> address >> game >> coach;
         }
         if (found == 0)
         {
@@ -347,7 +407,7 @@ void removeAll()
     cout << "Are you sure to remove all players?" << endl
          << "1. Yes" << endl
          << "2. No" << endl
-         << ">> ";
+         << "Choose option >> ";
     cin >> option;
     if (option == 1)
     {
@@ -394,10 +454,10 @@ int main()
             store();
             break;
         case 3:
-            actions(1); // modify
+            modify(); // modify
             break;
         case 4:
-            actions(2); // remove
+            remove(); // remove
             break;
         case 5:
             search(); // search
@@ -412,7 +472,7 @@ int main()
             exit(0);
             break;
         default:
-            title("Invalid choice... \nPlease select from the menu...");
+            title("Invalid choice... \nPlease select option from the menu...");
             break;
         }
     }

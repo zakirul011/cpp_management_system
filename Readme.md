@@ -4,15 +4,29 @@
 
     1. Display All Players
     2. Add New Player
+        a. Name
+        b. ID
+        c. Age
+        d. Mobile
+        e. Address
+        f. Game
+        g. Coach
     3. Modify Player
+        a. Modify Name
+        b. Modify ID
+        c. Modify Age
+        d. Modify Mobile
+        e. Modify Address
+        f. Modify Game
+        g. Modify Coach
     4. Remove Player
     5. Search Player
-        i. Search by Name
-        ii. Search by ID
-        iii. Search by Mobile
-        iv. Search by Address
-        v. Search by Game
-        v. Search by Coach
+        a. Search by Name
+        b. Search by ID
+        c. Search by Mobile
+        d. Search by Address
+        e. Search by Game
+        f. Search by Coach
     6. Remove All Players
     7. Clear Screen
     0. Exit
@@ -31,51 +45,48 @@
     name
     id
     age
+    mobile
     address
     coach
     game
-    mobile
 
-# Function (12):
+# Function (11):
 
 ## User Interface (2)
 
     title()
     clear()
 
-## Player function (10)
+## Player function (9)
 
-    store()
     input()
+    store()
     showSingle()
+    showAll()
     Mofify()
     Remove()
-    showAll()
-    actions()
-    search()
     searchBy()
+    search()
     removeAll()
 
-# Function Connectivity
+# Function Connectivity for features
 
 ## Display All Players
 
 ### showAll()
 
-    showSingle() - Loop
+    Loop -> showSingle()
 
 ## Add New Player
 
     input()
     store()
 
-## actions()
-
-### 1. Modify Player
+## Modify Player
 
     modify()
 
-### 2. Remove Player
+## Remove Player
 
     remove()
 
