@@ -9,14 +9,14 @@ int option,
     found = 0,
     age;
 
-char name[50],
-    id[50],
-    address[50],
-    coachName[50],
-    gameName[50],
-    mobile[50],
+char name[100],
+    id[100],
+    address[100],
+    coach[100],
+    game[100],
+    mobile[100],
     space = '\t',
-    searchText[50];
+    searchText[100];
 
 // FUNCTIONS
 
@@ -44,8 +44,8 @@ void store()
          << age << space
          << address << space
          << mobile << space
-         << gameName << space
-         << coachName << endl;
+         << game << space
+         << coach << endl;
 
     clear();
     cout << "===================================" << endl
@@ -60,26 +60,26 @@ void input()
 {
     notify("Enter Details of the Player");
 
-    cout << "\nPlayer Name: ";
+    cout << "\nName: ";
     cin >> name;
 
-    cout << "\nPlayer ID: ";
+    cout << "\nID: ";
     cin >> id;
 
-    cout << "\nPlayer Age: ";
+    cout << "\nAge: ";
     cin >> age;
 
-    cout << "\nPlayer Mobile No: ";
+    cout << "\nMobile No: ";
     cin >> mobile;
 
-    cout << "\nPlayer Address (City): ";
+    cout << "\nAddress (City): ";
     cin >> address;
 
-    cout << "\nGame Name: ";
-    cin >> gameName;
+    cout << "\nGame: ";
+    cin >> game;
 
-    cout << "\nPlayer's Coach Name: ";
-    cin >> coachName;
+    cout << "\nCoach  ";
+    cin >> coach;
 }
 
 // DISPLAY SINGLE PLAYER
@@ -96,10 +96,9 @@ void showSingle()
          << left << setw(18) << "Mobile No"
          << " :\t" << mobile << endl
          << left << setw(18) << "Game Name"
-         << " :\t" << gameName << endl
+         << " :\t" << game << endl
          << left << setw(18) << "Coach Name"
-         << " :\t" << coachName << endl
-         << left << setw(18) << endl;
+         << " :\t" << coach << endl;
 }
 
 // DISPLAY ALL PLAYER OF DATABASE
@@ -109,7 +108,7 @@ void showAll()
     readFile.open("player.txt");
     found = 0;
 
-    notify("All Player List");
+    notify("Player List");
 
     if (!readFile)
     {
@@ -117,7 +116,7 @@ void showAll()
     }
     else
     {
-        readFile >> name >> id >> age >> address >> mobile >> gameName >> coachName;
+        readFile >> name >> id >> age >> address >> mobile >> game >> coach;
         while (!readFile.eof())
         {
             found++;
@@ -125,7 +124,7 @@ void showAll()
                  << "Player no. " << found << endl
                  << "===================================" << endl;
             showSingle();
-            readFile >> name >> id >> age >> address >> mobile >> gameName >> coachName;
+            readFile >> name >> id >> age >> address >> mobile >> game >> coach;
         }
         if (found == 0)
         {
@@ -136,7 +135,164 @@ void showAll()
     readFile.close();
 }
 
-// ACTIONS DEPEND ON USER CHOISE
+// MODIFY PLAYER
+void modify(ofstream &file)
+{
+    if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
+    {
+        found++;
+        clear();
+        input();
+        file << name << space
+             << id << space
+             << age << space
+             << address << space
+             << mobile << space
+             << game << space
+             << coach << endl;
+
+        clear();
+        notify("Player is successfully Modified");
+    }
+    else
+    {
+        file << name << space
+             << id << space
+             << age << space
+             << address << space
+             << mobile << space
+             << game << space
+             << coach << endl;
+    }
+}
+
+// REMOVE PLAYER
+void remove(ofstream &file)
+{
+    if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
+    {
+        found++;
+        clear();
+        cout << "Are you sure to remove the player " << searchText << "?" << endl
+             << "1. Yes" << endl
+             << "2. No" << endl
+             << ">> ";
+        cin >> option;
+        if (option == 1)
+        {
+            clear();
+            notify("Player is successfully removed");
+        }
+        else
+        {
+            file << name << space
+                 << id << space
+                 << age << space
+                 << address << space
+                 << mobile << space
+                 << game << space
+                 << coach << endl;
+        }
+    }
+    else
+    {
+        file << name << space
+             << id << space
+             << age << space
+             << address << space
+             << mobile << space
+             << game << space
+             << coach << endl;
+    }
+}
+
+void searchBy(ifstream &file, char *info)
+{
+    cout << ">> ";
+    cin >> searchText;
+    cout << "===================================" << endl
+         << "Search Result for \"" << searchText << "\"" << endl
+         << "===================================" << endl;
+    while (!file.eof())
+    {
+        if (strcmp(searchText, info) == 0)
+        {
+            found++;
+            cout << "===================================" << endl
+                 << "Player " << found << endl
+                 << "===================================" << endl;
+            showSingle();
+        }
+        file >> name >> id >> age >> address >> mobile >> game >> coach;
+    }
+}
+
+// SEARCH PLAYER
+void search()
+{
+    notify("Search By ");
+    cout << "1. Name" << endl
+         << "2. ID" << endl
+         << "3. Mobile No" << endl
+         << "4. Addess (City)" << endl
+         << "5. Game" << endl
+         << "6. Coach" << endl
+         << "Choose option >> ";
+    cin >> option;
+    clear();
+
+    ifstream file("player.txt");
+    found = 0;
+
+    if (!file)
+    {
+        notify("There is no Records");
+    }
+    else
+    {
+        file >> name >> id >> age >> address >> mobile >> game >> coach;
+        switch (option)
+        {
+        case 1:
+            notify("Enter Player Name");
+            searchBy(file, name);
+            break;
+        case 2:
+            notify("Enter Player ID");
+            searchBy(file, id);
+            break;
+        case 3:
+            notify("Enter Player Mobile No");
+            searchBy(file, mobile);
+            break;
+        case 4:
+            notify("Enter Player Address (City)");
+            searchBy(file, address);
+            break;
+        case 5:
+            notify("Enter Name of the Game");
+            searchBy(file, game);
+            break;
+        case 6:
+            notify("Enter Coach Name");
+            searchBy(file, coach);
+            break;
+
+        default:
+            notify("Invalid Search Choice");
+            break;
+        }
+
+        if (found == 0)
+        {
+            notify("Player Not found");
+        }
+    }
+
+    file.close();
+}
+
+// ACTIONS DEPEND ON USER CHOICE
 void actions(int action)
 {
     notify("Enter Player Name or ID");
@@ -153,109 +309,24 @@ void actions(int action)
     }
     else
     {
-        file1 >> name >> id >> age >> address >> mobile >> gameName >> coachName;
+        file1 >> name >> id >> age >> address >> mobile >> game >> coach;
         while (!file1.eof())
         {
             switch (action)
             {
             case 1:
                 // Modify by searched text
-                if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
-                {
-                    found++;
-                    clear();
-                    input();
-                    file2 << name << space
-                          << id << space
-                          << age << space
-                          << address << space
-                          << mobile << space
-                          << gameName << space
-                          << coachName << endl;
-
-                    clear();
-                    notify("Player is successfully Modified");
-                }
-                else
-                {
-                    file2 << name << space
-                          << id << space
-                          << age << space
-                          << address << space
-                          << mobile << space
-                          << gameName << space
-                          << coachName << endl;
-                }
+                modify(file2);
                 break;
             case 2:
                 // remove by searched text
-                if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
-                {
-                    found++;
-                    clear();
-                    cout << "Are you sure to remove the player " << searchText << "?" << endl
-                         << "1. Yes" << endl
-                         << "2. No" << endl
-                         << ">> ";
-                    cin >> option;
-                    if (option == 1)
-                    {
-                        clear();
-                        notify("Player is successfully removed");
-                    }
-                    else
-                    {
-                        file2 << name << space
-                              << id << space
-                              << age << space
-                              << address << space
-                              << mobile << space
-                              << gameName << space
-                              << coachName << endl;
-                    }
-                }
-                else
-                {
-                    file2 << name << space
-                          << id << space
-                          << age << space
-                          << address << space
-                          << mobile << space
-                          << gameName << space
-                          << coachName << endl;
-                }
+                remove(file2);
                 break;
-            case 3:
-                // search by searched text
-                if (strcmp(searchText, name) == 0 || strcmp(searchText, id) == 0)
-                {
-                    found++;
-                    notify("Searched Player Information");
-                    showSingle();
-                    file2 << name << space
-                          << id << space
-                          << age << space
-                          << address << space
-                          << mobile << space
-                          << gameName << space
-                          << coachName << endl;
-                }
-                else
-                {
-                    file2 << name << space
-                          << id << space
-                          << age << space
-                          << address << space
-                          << mobile << space
-                          << gameName << space
-                          << coachName << endl;
-                }
-
             default:
                 break;
             }
 
-            file1 >> name >> id >> age >> address >> mobile >> gameName >> coachName;
+            file1 >> name >> id >> age >> address >> mobile >> game >> coach;
         }
         if (found == 0)
         {
@@ -297,6 +368,7 @@ int main()
     while (1)
     {
         // MAINMENU
+        cout << endl;
         notify("SPORTS MANAGEMENT MENU");
         cout << "1. Display All Players" << endl
              << "2. Add New Player" << endl
@@ -310,7 +382,7 @@ int main()
         cin >> option;
         clear();
 
-        // SHOW ACTION ON USER CHOISE
+        // SHOW ACTION ON USER CHOICE
         switch (option)
         {
         case 1:
@@ -321,13 +393,13 @@ int main()
             store();
             break;
         case 3:
-            actions(1);
+            actions(1); // modify
             break;
         case 4:
-            actions(2);
+            actions(2); // remove
             break;
         case 5:
-            actions(3);
+            search(); // search
             break;
         case 6:
             removeAll();

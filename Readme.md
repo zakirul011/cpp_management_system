@@ -1,4 +1,6 @@
-# Features (7) :
+# SPORTS MANAGEMENT SYSTEM
+
+# Features (8) :
 
     1. Display All Players
     2. Add New Player
@@ -6,7 +8,8 @@
     4. Remove Player
     5. Search Player
     6. Remove All Players
-    7. Clear screen
+    7. Clear Screen
+    0. Exit
 
 # Variables (11):
 
@@ -23,22 +26,67 @@
     id
     age
     address
-    coachName
-    gameName
-    Mobile
+    coach
+    game
+    mobile
 
-# Function (8):
+# Function (12):
 
-## Basic function (3)
+## User Interface (2)
 
-    notify
-    clear
-    store
+    title()
+    clear()
 
-## Player function (5)
+## Player function (10)
 
-    input
-    showSingle
-    showAll
-    actions
-    removeAll
+    store()
+    input()
+    showSingle()
+    Mofify()
+    Remove()
+    showAll()
+    actions()
+    search()
+    searchBy()
+    removeAll()
+
+# Function Connectivity
+
+## Display All Players
+
+### showAll()
+
+    showSingle() - Loop
+
+## Add New Player
+
+    input()
+    store()
+
+## actions()
+
+### 1. Modify Player
+
+    modify()
+
+### 2. Remove Player
+
+    remove()
+
+## Search Player
+
+### search()
+
+    searchBy()
+
+## Remove All Players
+
+    removeAll()
+
+## Clear Screen
+
+    clear()
+
+## Exit
+
+    exit(0)
